@@ -1,0 +1,166 @@
+import Foundation
+
+// MARK: - Welcome
+struct Welcome: Codable {
+    let cod: String
+    let message, cnt: Int
+    let list: [List]
+    let city: City
+}
+cod Internal parameter
+message Internal parameter
+cnt A number of timestamps returned in the API response
+
+
+
+// MARK: - City
+struct City: Codable {
+    let id: Int
+    let name: String
+    let coord: Coord
+    let country: String
+    let population, timezone, sunrise, sunset: Int
+}
+city.id City ID. Please note that built-in geocoder functionality has been deprecated. Learn more here.
+city.name City name. Please note that built-in geocoder functionality has been deprecated. Learn more here.
+city.coord
+city.coord.lat City geo location, latitude
+city.coord.lon City geo location, longitude
+city.country Country code (GB, JP etc.). Please note that built-in geocoder functionality has been deprecated. Learn more here.
+city.population City population
+city.timezone Shift in seconds from UTC
+city.sunrise Sunrise time, Unix, UTC
+city.sunset Sunset time, Unix, UTC
+
+
+
+// MARK: - Coord
+struct Coord: Codable {
+    let lat, lon: Double
+}
+
+// MARK: - List
+struct List: Codable {
+    let dt: Int
+    let main: MainClass
+    let weather: [Weather]
+    let clouds: Clouds
+    let wind: Wind
+    let visibility: Int
+    let pop: Double
+    let rain: Rain?
+    let sys: Sys
+    let dtTxt: String
+
+    enum CodingKeys: String, CodingKey {
+        case dt, main, weather, clouds, wind, visibility, pop, rain, sys
+        case dtTxt = "dt_txt"
+    }
+}
+list.dt Time of data forecasted, unix, UTC
+list.main
+list.main.temp Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+list.main.feels_like This temperature parameter accounts for the human perception of weather. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+list.main.temp_min Minimum temperature at the moment of calculation. This is minimal forecasted temperature (within large megalopolises and urban areas), use this parameter optionally. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+list.main.temp_max Maximum temperature at the moment of calculation. This is maximal forecasted temperature (within large megalopolises and urban areas), use this parameter optionally. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+list.main.pressure Atmospheric pressure on the sea level by default, hPa
+list.main.sea_level Atmospheric pressure on the sea level, hPa
+list.main.grnd_level Atmospheric pressure on the ground level, hPa
+list.main.humidity Humidity, %
+list.main.temp_kf Internal parameter
+list.weather
+list.weather.id Weather condition id
+list.weather.main Group of weather parameters (Rain, Snow, Extreme etc.)
+list.weather.description Weather condition within the group. You can get the output in your language. Learn more.
+list.weather.icon Weather icon id
+list.clouds
+list.clouds.all Cloudiness, %
+list.wind
+list.wind.speed Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
+list.wind.deg Wind direction, degrees (meteorological)
+list.wind.gust Wind gust. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour
+list.visibility Average visibility, metres. The maximum value of the visibility is 10km
+list.pop Probability of precipitation. The values of the parameter vary between 0 and 1, where 0 is equal to 0%, 1 is equal to 100%
+list.rain
+list.rain.3h Rain volume for last 3 hours, mm
+list.snow
+list.snow.3h Snow volume for last 3 hours
+list.sys
+list.sys.pod Part of the day (n - night, d - day)
+list.dt_txt Time of data forecasted, ISO, UTC
+
+
+
+// MARK: - Clouds
+struct Clouds: Codable {
+    let all: Int
+}
+
+// MARK: - MainClass
+struct MainClass: Codable {
+    let temp, feelsLike, tempMin, tempMax: Double
+    let pressure, seaLevel, grndLevel, humidity: Int
+    let tempKf: Double
+
+    enum CodingKeys: String, CodingKey {
+        case temp
+        case feelsLike = "feels_like"
+        case tempMin = "temp_min"
+        case tempMax = "temp_max"
+        case pressure
+        case seaLevel = "sea_level"
+        case grndLevel = "grnd_level"
+        case humidity
+        case tempKf = "temp_kf"
+    }
+}
+
+// MARK: - Rain
+struct Rain: Codable {
+    let the3H: Double
+
+    enum CodingKeys: String, CodingKey {
+        case the3H = "3h"
+    }
+}
+
+// MARK: - Sys
+struct Sys: Codable {
+    let pod: Pod
+}
+
+enum Pod: String, Codable {
+    case d = "d"
+    case n = "n"
+}
+
+// MARK: - Weather
+struct Weather: Codable {
+    let id: Int
+    let main: MainEnum
+    let description: Description
+    let icon: String
+}
+
+enum Description: String, Codable {
+    case brokenClouds = "broken clouds"
+    case clearSky = "clear sky"
+    case fewClouds = "few clouds"
+    case lightRain = "light rain"
+    case overcastClouds = "overcast clouds"
+    case scatteredClouds = "scattered clouds"
+}
+
+enum MainEnum: String, Codable {
+    case clear = "Clear"
+    case clouds = "Clouds"
+    case rain = "Rain"
+}
+
+// MARK: - Wind
+struct Wind: Codable {
+    let speed: Double
+    let deg: Int
+    let gust: Double
+}
+
