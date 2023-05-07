@@ -11,7 +11,7 @@ import Foundation
 
 
 // MARK: - Welcome
-struct CurrentWeatherData: Codable {
+struct WeatherForecastData: Codable {
     let list: [List]
     let city: City
 }

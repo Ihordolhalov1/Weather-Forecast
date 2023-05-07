@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CurrentWeather {
+struct WeatherForecast {
     let cityName: String
     
     let temperature: Double
@@ -38,12 +38,13 @@ struct CurrentWeather {
     var temperatureForecast: [Double] = []
     var feelsLikeForecast: [Double] = []
     
-    init?(currentWeatherData: CurrentWeatherData) {
+    init?(currentWeatherData: WeatherForecastData) {
         cityName = currentWeatherData.city.name
         temperature = currentWeatherData.list.first!.main.temp
         feelsLikeTemperature = currentWeatherData.list.first!.main.feelsLike
         conditionCode = currentWeatherData.list.first!.weather.first!.id
         for index in 0...currentWeatherData.list.count-1 {
+            //обрізаю вхідний масив в 2 рази, беру тільки парні індекси, щоб була відстань 6 годин
             if index == 0 || index%2 == 0 {
                 date.append(currentWeatherData.list[index].dt_txt)
                 temperatureForecast.append(currentWeatherData.list[index].main.temp)

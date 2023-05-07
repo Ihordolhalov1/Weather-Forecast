@@ -65,7 +65,7 @@ class ViewController: UIViewController {
         
     }
     
-    func updateInterfaceWith(weather: CurrentWeather) {
+    func updateInterfaceWith(weather: WeatherForecast) {
         DispatchQueue.main.async {
             self.cityLabel.text = weather.cityName
             self.temperatureLabel.text = weather.temperatureString

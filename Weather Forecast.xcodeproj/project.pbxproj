@@ -16,8 +16,8 @@
 		352AD27B2404DD6600FE672A /* ViewController+alertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352AD27A2404DD6600FE672A /* ViewController+alertController.swift */; };
 		353272CE240924DA000686B3 /* NetworkWeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353272CD240924DA000686B3 /* NetworkWeatherManager.swift */; };
 		353272D024092579000686B3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353272CF24092579000686B3 /* Constants.swift */; };
-		35BF72252411172C002622D2 /* CurrentWeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF72242411172C002622D2 /* CurrentWeatherData.swift */; };
-		35BF722D24111ECB002622D2 /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF722C24111ECB002622D2 /* CurrentWeather.swift */; };
+		35BF72252411172C002622D2 /* WeatherForecastData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF72242411172C002622D2 /* WeatherForecastData.swift */; };
+		35BF722D24111ECB002622D2 /* WeatherForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF722C24111ECB002622D2 /* WeatherForecast.swift */; };
 		5D0B503529F1CC1700E4D40D /* Common structure in Resources */ = {isa = PBXBuildFile; fileRef = 5D0B503429F1CC1700E4D40D /* Common structure */; };
 /* End PBXBuildFile section */
 
@@ -33,8 +33,8 @@
 		352AD27A2404DD6600FE672A /* ViewController+alertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+alertController.swift"; sourceTree = "<group>"; };
 		353272CD240924DA000686B3 /* NetworkWeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWeatherManager.swift; sourceTree = "<group>"; };
 		353272CF24092579000686B3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		35BF72242411172C002622D2 /* CurrentWeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherData.swift; sourceTree = "<group>"; };
-		35BF722C24111ECB002622D2 /* CurrentWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
+		35BF72242411172C002622D2 /* WeatherForecastData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecastData.swift; sourceTree = "<group>"; };
+		35BF722C24111ECB002622D2 /* WeatherForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecast.swift; sourceTree = "<group>"; };
 		5D0B503429F1CC1700E4D40D /* Common structure */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Common structure"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,9 +101,9 @@
 			isa = PBXGroup;
 			children = (
 				353272CD240924DA000686B3 /* NetworkWeatherManager.swift */,
-				35BF722C24111ECB002622D2 /* CurrentWeather.swift */,
+				35BF722C24111ECB002622D2 /* WeatherForecast.swift */,
 				5D0B503429F1CC1700E4D40D /* Common structure */,
-				35BF72242411172C002622D2 /* CurrentWeatherData.swift */,
+				35BF72242411172C002622D2 /* WeatherForecastData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -200,11 +200,11 @@
 			files = (
 				352AD2652403FA5700FE672A /* ViewController.swift in Sources */,
 				352AD27B2404DD6600FE672A /* ViewController+alertController.swift in Sources */,
-				35BF722D24111ECB002622D2 /* CurrentWeather.swift in Sources */,
+				35BF722D24111ECB002622D2 /* WeatherForecast.swift in Sources */,
 				353272CE240924DA000686B3 /* NetworkWeatherManager.swift in Sources */,
 				352AD2612403FA5700FE672A /* AppDelegate.swift in Sources */,
 				352AD2632403FA5700FE672A /* SceneDelegate.swift in Sources */,
-				35BF72252411172C002622D2 /* CurrentWeatherData.swift in Sources */,
+				35BF72252411172C002622D2 /* WeatherForecastData.swift in Sources */,
 				353272D024092579000686B3 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

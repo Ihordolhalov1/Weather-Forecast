@@ -16,7 +16,7 @@ class NetworkWeatherManager {
         case coordinate(latitude: CLLocationDegrees, longitude: CLLocationDegrees)
     }
     
-    var onCompletion: ((CurrentWeather) -> Void)?
+    var onCompletion: ((WeatherForecast) -> Void)?
     
     func fetchCurrentWeather(forRequestType requestType: RequestType) {
         var urlString = ""
@@ -36,8 +36,7 @@ class NetworkWeatherManager {
         let task = session.dataTask(with: url) { data, response, error in
             if let data = data {
                 let dataString = String(data: data, encoding: .utf8)
-                print("ОТРИМАВ ТАКІ ДАНІ")
-                print(dataString!)
+                print("ОТРИМАВ ДАНІ ВІД СЕРВЕРА, Віддаю на парсінг")
                 if let currentWeather = self.parseJSON(withData: data) {
                     self.onCompletion?(currentWeather)
                     print(currentWeather)
@@ -47,15 +46,15 @@ class NetworkWeatherManager {
         task.resume()
     }
     
-    fileprivate func parseJSON(withData data: Data) -> CurrentWeather? {
+    fileprivate func parseJSON(withData data: Data) -> WeatherForecast? {
         let decoder = JSONDecoder()
         do {
-            let currentWeatherData = try decoder.decode(CurrentWeatherData.self, from: data)
+            let currentWeatherData = try decoder.decode(WeatherForecastData.self, from: data)
             
-            guard let currentWeather = CurrentWeather(currentWeatherData: currentWeatherData) else {
+            guard let currentWeather = WeatherForecast(currentWeatherData: currentWeatherData) else {
                 return nil
             }
-            print("УСПЕШНО ЗАПАРСИЛ")
+            print("УСПІШНО ЗАПАРСИВ")
             return currentWeather
         } catch let error as NSError {
             print(error.localizedDescription)
