@@ -35,7 +35,7 @@ class NetworkWeatherManager {
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url) { data, response, error in
             if let data = data {
-                let dataString = String(data: data, encoding: .utf8)
+               // let dataString = String(data: data, encoding: .utf8)
                 print("ОТРИМАВ ДАНІ ВІД СЕРВЕРА, Віддаю на парсінг")
                 if let currentWeather = self.parseJSON(withData: data) {
                     self.onCompletion?(currentWeather)

@@ -9,14 +9,19 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var feelsLikeTemperatureLabel: UILabel!
     
+    @IBOutlet weak var weatherTable: weatherTable!
+    
     var networkWeatherManager = NetworkWeatherManager()
+    
+    var date: [String] = []
+    
     lazy var locationManager: CLLocationManager = {
         let lm = CLLocationManager()
         lm.delegate = self
@@ -33,7 +38,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        weatherTable.dataSource = self
         networkWeatherManager.onCompletion = { [weak self] currentWeather in
             guard let self = self else { return }
             self.updateInterfaceWith(weather: currentWeather)
@@ -71,6 +76,10 @@ class ViewController: UIViewController {
             self.temperatureLabel.text = weather.temperatureString
             self.feelsLikeTemperatureLabel.text = weather.feelsLikeTemperatureString
             self.weatherIconImageView.image = UIImage(systemName: weather.systemIconNameString)
+            self.date = weather.date
+            print(self.date)
+            self.weatherTable.reloadData()
+        
         }
     }
 }
@@ -91,4 +100,21 @@ extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
     }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return countOfDate
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "weatherTableViewCell") as? weatherTableViewCell {
+            if date == [] {cell.dateLabel.text = "Do not have date"} else {cell.dateLabel.text = date[indexPath.row]}
+            print(date)
+            return cell
+        }else{
+            return weatherTableViewCell()
+        }
+    }
+    
+    
+    
 }

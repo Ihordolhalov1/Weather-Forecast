@@ -95,6 +95,42 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Xlg-2F-5oR" customClass="weatherTable" customModule="Weather_Forecast" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="546" width="414" height="350"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="350" id="YQv-X7-9BO"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="weatherTableViewCell" id="Im1-zh-MsD" customClass="weatherTableViewCell" customModule="Weather_Forecast" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Im1-zh-MsD" id="Qee-YY-AIf">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1h-8d-ReP">
+                                                    <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="N4i-Ae-f6S"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="42" id="xHU-bd-Y6h"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="b1h-8d-ReP" firstAttribute="top" secondItem="Qee-YY-AIf" secondAttribute="top" id="fd9-B0-KD4"/>
+                                                <constraint firstItem="b1h-8d-ReP" firstAttribute="leading" secondItem="Qee-YY-AIf" secondAttribute="leading" id="pN0-gJ-arl"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="dateLabel" destination="b1h-8d-ReP" id="mvF-II-ctW"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="CQJ-ML-uYT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -103,9 +139,12 @@
                             <constraint firstItem="CQJ-ML-uYT" firstAttribute="trailing" secondItem="voP-iF-iac" secondAttribute="trailing" id="BBz-TQ-8z7"/>
                             <constraint firstItem="CQJ-ML-uYT" firstAttribute="trailing" secondItem="Zjh-XY-7pK" secondAttribute="trailing" constant="16.5" id="E04-nW-1I9"/>
                             <constraint firstAttribute="bottom" secondItem="voP-iF-iac" secondAttribute="bottom" id="YBk-9B-8k3"/>
+                            <constraint firstAttribute="bottom" secondItem="Xlg-2F-5oR" secondAttribute="bottom" id="e8A-R7-GUZ"/>
+                            <constraint firstItem="Xlg-2F-5oR" firstAttribute="trailing" secondItem="CQJ-ML-uYT" secondAttribute="trailing" id="ePE-Ax-Eji"/>
                             <constraint firstItem="c8Z-yv-41O" firstAttribute="top" secondItem="CQJ-ML-uYT" secondAttribute="top" constant="20" id="gVu-fR-YW5"/>
                             <constraint firstItem="c8Z-yv-41O" firstAttribute="centerX" secondItem="CQJ-ML-uYT" secondAttribute="centerX" id="gcs-30-ZgG"/>
                             <constraint firstItem="Zjh-XY-7pK" firstAttribute="top" secondItem="CQJ-ML-uYT" secondAttribute="top" id="rJo-lo-q2O"/>
+                            <constraint firstItem="Xlg-2F-5oR" firstAttribute="leading" secondItem="CQJ-ML-uYT" secondAttribute="leading" id="vot-bc-DoZ"/>
                             <constraint firstItem="voP-iF-iac" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="wdB-xb-hlq"/>
                         </constraints>
                     </view>
@@ -114,6 +153,7 @@
                         <outlet property="feelsLikeTemperatureLabel" destination="oy1-yl-Ypu" id="K52-R9-6F9"/>
                         <outlet property="temperatureLabel" destination="vpU-8Y-3L4" id="VB6-aU-xe8"/>
                         <outlet property="weatherIconImageView" destination="b0L-oC-FKo" id="sc8-AL-9UB"/>
+                        <outlet property="weatherTable" destination="Xlg-2F-5oR" id="GYe-Aj-83T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
