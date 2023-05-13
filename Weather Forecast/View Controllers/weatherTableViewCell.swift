@@ -11,9 +11,12 @@ import UIKit
 class weatherTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     
+    @IBOutlet weak var cloudImage: UIImageView!
+    
+    @IBOutlet weak var temperatureLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        dateLabel.text = "Text"
         // Initialization code
     }
 

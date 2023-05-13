@@ -95,9 +95,9 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Xlg-2F-5oR" customClass="weatherTable" customModule="Weather_Forecast" customModuleProvider="target">
+                            <tableView clipsSubviews="YES" alpha="0.90000000000000002" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Xlg-2F-5oR" customClass="weatherTable" customModule="Weather_Forecast" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="546" width="414" height="350"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="350" id="YQv-X7-9BO"/>
                                 </constraints>
@@ -109,24 +109,40 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1h-8d-ReP">
-                                                    <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="N4i-Ae-f6S"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="42" id="xHU-bd-Y6h"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="IDt-gY-i7e">
+                                                    <rect key="frame" x="0.0" y="0.0" width="124.66666666666667" height="20"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1h-8d-ReP">
+                                                            <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="20"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sun." translatesAutoresizingMaskIntoConstraints="NO" id="7bJ-Eu-uIY" userLabel="cloudImage">
+                                                            <rect key="frame" x="52.333333333333336" y="0.0" width="20.000000000000007" height="20"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="20" id="eyj-Ii-bkF"/>
+                                                                <constraint firstAttribute="width" constant="20" id="gr9-c8-CiC"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqS-hu-ndx">
+                                                            <rect key="frame" x="83.333333333333329" y="0.0" width="41.333333333333329" height="20"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="b1h-8d-ReP" firstAttribute="top" secondItem="Qee-YY-AIf" secondAttribute="top" id="fd9-B0-KD4"/>
-                                                <constraint firstItem="b1h-8d-ReP" firstAttribute="leading" secondItem="Qee-YY-AIf" secondAttribute="leading" id="pN0-gJ-arl"/>
+                                                <constraint firstItem="IDt-gY-i7e" firstAttribute="top" secondItem="Qee-YY-AIf" secondAttribute="topMargin" constant="-11" id="i6E-gb-rFT"/>
+                                                <constraint firstItem="IDt-gY-i7e" firstAttribute="leading" secondItem="Qee-YY-AIf" secondAttribute="leadingMargin" constant="-20" id="iPD-JJ-Nuj"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="cloudImage" destination="7bJ-Eu-uIY" id="HD2-HG-A4e"/>
                                             <outlet property="dateLabel" destination="b1h-8d-ReP" id="mvF-II-ctW"/>
+                                            <outlet property="temperatureLabel" destination="bqS-hu-ndx" id="hUg-n9-79o"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -165,6 +181,7 @@
         <image name="magnifyingglass.circle.fill" catalog="system" width="128" height="123"/>
         <image name="nosign" catalog="system" width="128" height="123"/>
         <image name="person.crop.square" catalog="system" width="128" height="114"/>
+        <image name="sun." width="128" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

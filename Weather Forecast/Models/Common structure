@@ -1,5 +1,42 @@
 import Foundation
 
+
+
+Інфо по місту:
+city.coord.lat, city.coord.long
+city.country
+city.population
+city.timezone
+
+
+Інфо розшифровки по прогнозу
+ciy.sunset
+city.sunrise
+list.main.temp_min
+list.main.temp_max
+
+list.main.grnd_level Atmospheric pressure on the ground level, hPa
+
+list.weather.description Weather condition within the group. You can get the output in your language. Learn more.
+list.weather.icon Weather icon id
+https://openweathermap.org/weather-conditions
+
+list.clouds.all Cloudiness, %
+
+list.wind.speed Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
+list.wind.deg Wind direction, degrees (meteorological)
+list.wind.gust Wind gust. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour
+
+list.visibility Average visibility, metres. The maximum value of the visibility is 10km
+list.pop Probability of precipitation. The values of the parameter vary between 0 and 1, where 0 is equal to 0%, 1 is equal to 100%
+
+
+
+
+
+
+
+
 // MARK: - Welcome
 struct Welcome: Codable {
     let cod: String
