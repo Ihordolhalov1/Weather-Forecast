@@ -15,6 +15,8 @@ class weatherTableViewCell: UITableViewCell {
     
     @IBOutlet weak var temperatureLabel: UILabel!
     
+    @IBOutlet weak var windLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -39,6 +39,10 @@ struct List: Codable {
     let weather: [Weather]
     let dt_txt: String
     let sys: Sys
+    let wind: Wind
+    let clouds: Clouds
+    let pop: Double
+    let visibility: Int
 
 }
 
@@ -56,11 +60,14 @@ enum Pod: String, Codable {
 
 // MARK: - MainClass
 struct MainClass: Codable {
-    let temp, feelsLike: Double
+    let temp, feelsLike, humidity, pressure: Double
     
     enum CodingKeys: String, CodingKey {
         case temp
         case feelsLike = "feels_like"
+        case humidity
+        case pressure
+       
     }
 }
 
@@ -70,12 +77,22 @@ struct MainClass: Codable {
 // MARK: - Weather
 struct Weather: Codable {
     let id: Int
+    let description: String
 }
 
 
 
+// MARK: - Wind
+struct Wind: Codable {
+    let speed: Double
+    let deg: Int
+    let gust: Double
+}
 
-
+// MARK: - Clouds
+struct Clouds: Codable {
+    let all: Int
+}
 
 
 

@@ -1,16 +1,17 @@
 //
-//  weatherTable.swift
+//  DetailedView.swift
 //  Weather Forecast
 //
-//  Created by Ihor Dolhalov on 08.05.2023.
+//  Created by Ihor Dolhalov on 16.05.2023.
 //  Copyright © 2023 Ihor Dolhalov. All rights reserved.
 //
 
 import UIKit
 
-class weatherTable: UITableView {
-  
+class DetailedView: UIView {
 
+
+    }
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -19,4 +20,4 @@ class weatherTable: UITableView {
     }
     */
 
-}
+

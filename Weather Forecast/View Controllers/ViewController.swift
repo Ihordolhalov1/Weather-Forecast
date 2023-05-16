@@ -16,15 +16,54 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var feelsLikeTemperatureLabel: UILabel!
     
-    @IBOutlet weak var weatherTable: weatherTable!
+    @IBOutlet weak var detailedView: DetailedView!
+    
+    @IBOutlet weak var weatherTable: UITableView!
+    
+    @IBOutlet weak var detailedTempLabel: UILabel!
+    @IBOutlet weak var detailedLikeTempLabel: UILabel!
+
+    @IBOutlet weak var detailedWeatherDescriptionLabel: UILabel!
+    @IBOutlet weak var detailedPressureLabel: UILabel!
+    @IBOutlet weak var detailedHumidityLabel: UILabel!
+    @IBOutlet weak var detailedCloudityLabel: UILabel!
+    @IBOutlet weak var detailedProbabilityLabel: UILabel!
+    @IBOutlet weak var detailedVisibilityLabel: UILabel!
+    @IBOutlet weak var detailedWindSpeedLabel: UILabel!
+    @IBOutlet weak var detailedWindDirectionLabel: UILabel!
+    @IBOutlet weak var detailedWindGustLabel: UILabel!
+    
+    
+    
+    
+    
+    
+    
     
     var networkWeatherManager = NetworkWeatherManager()
     
     var dateString: [String] = []
     var conditionCodeForecast: [Int] = []
     var temperatureForecast: [Double] = []
+    var feelsLikeForecast: [Double] = []
+    var weatherDescription: [String] = []
+    var pressure: [Double] = []
+    var humidity: [Double] = []
+    var cloudiness: [Int] = []
     var pod: [String] = []
     var shift: Int  = 0
+    var speed: [Double] = []
+    var pop: [Double] = []
+    var visibility: [Int] = []
+    var deg: [Int] = []
+    var gust: [Double] = []
+    var population: Int  = 0
+    var sunrise: Int = 0
+    var sunset: Int = 0
+   
+    
+    
+    
     
     
     lazy var locationManager: CLLocationManager = {
@@ -35,6 +74,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return lm
     }()
     
+    @IBAction func closeButtonPressed(_ sender: Any) {
+        detailedView.isHidden = true
+    }
     @IBAction func searchPressed(_ sender: UIButton) {
         self.presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) { [unowned self] city in
             self.networkWeatherManager.fetchCurrentWeather(forRequestType: .cityName(city: city))
@@ -43,21 +85,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         weatherTable.dataSource = self
+        weatherTable.delegate = self
+        
         networkWeatherManager.onCompletion = { [weak self] currentWeather in
             guard let self = self else { return }
             self.updateInterfaceWith(weather: currentWeather)
         }
-        
 
             if CLLocationManager.locationServicesEnabled() {
                 if #available(iOS 14.0, *) {
                     switch self.locationManager.authorizationStatus {
-                    case .notDetermined, .restricted, .denied:
+                    case .restricted, .denied:
                         print("No access")
-                    case .authorizedAlways, .authorizedWhenInUse:
+                    case .notDetermined, .authorizedAlways, .authorizedWhenInUse:
                         print("Access")
                         self.locationManager.requestLocation()
+                        networkWeatherManager.onCompletion = { [weak self] currentWeather in
+                            guard let self = self else { return }
+                            self.updateInterfaceWith(weather: currentWeather)
+                        }
+                        
                     @unknown default:
                         break
                     }
@@ -69,8 +118,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             else {
                 print("Location services are not enabled")
             }
-        
-        
+        detailedView.layer.cornerRadius = 10
+        detailedView.isHidden = true
     
         
     }
@@ -87,8 +136,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.temperatureForecast = weather.temperatureForecast
             self.pod = weather.pod
             self.shift = weather.timezone
+            self.speed = weather.speed
+            self.feelsLikeForecast = weather.feelsLikeForecast
+            self.weatherDescription = weather.description
+            self.humidity = weather.humidity
+            self.pressure = weather.pressure
+            self.cloudiness = weather.cloudiness
+            self.pop = weather.pop
+            self.visibility = weather.visibility
+            self.deg = weather.deg
+            self.gust = weather.gust
+            
+            
             self.weatherTable.reloadData()
-        
+           
         }
     }
 }
@@ -126,7 +187,14 @@ extension ViewController: CLLocationManagerDelegate {
             }
             
             
-        
+        //WindSpeed
+            if speed == [] {cell.windLabel.text = "Do not have date"} else {
+                print ("I will fulfil the table now with wind speed")
+                var speedString: String {
+                    return String(format: "%.1f", speed[indexPath.row])
+                }
+                cell.windLabel.text = String(format: "%.1f", speed[indexPath.row]) + " m/s"
+            }
         //ImageCloud
             if conditionCodeForecast == [] {print("масив картинок пустий")
             } else {
@@ -176,9 +244,9 @@ extension ViewController: CLLocationManagerDelegate {
                 let isToday = calendar.isDate(modifiedDate, inSameDayAs: today)
                 let isTomorrow = calendar.isDate(modifiedDate, inSameDayAs: tomorrow)
                 if isToday {
-                    dateFormatter.dateFormat = "'today' HH:mm"
+                    dateFormatter.dateFormat = "'Today' HH:mm"
                 } else if isTomorrow {
-                    dateFormatter.dateFormat = "'tomorrow' HH:mm"
+                    dateFormatter.dateFormat = "'Tomorrow' HH:mm"
                 } else {
                     dateFormatter.dateFormat = "EEEE dd.MM HH:mm"
                 }
@@ -193,6 +261,28 @@ extension ViewController: CLLocationManagerDelegate {
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        detailedTempLabel.text = "Temperature \(temperatureForecast[indexPath.row]) ºC"
+        detailedLikeTempLabel.text = "Feels like temperature \(feelsLikeForecast[indexPath.row]) ºC"
+      
+        detailedWeatherDescriptionLabel.text = "It will be \(weatherDescription[indexPath.row])"
+        
+        detailedPressureLabel.text = "Pressure \(pressure[indexPath.row]) hPa"
+        detailedHumidityLabel.text = "Humidity \(humidity[indexPath.row])%"
+        detailedCloudityLabel.text = "Cloudiness \(cloudiness[indexPath.row])%"
+        detailedProbabilityLabel.text = "Probability of precipitation \(pop[indexPath.row])%"
+        detailedVisibilityLabel.text = "Visibility \(visibility[indexPath.row]) meters"
+        detailedWindSpeedLabel.text = "Wind speed \(speed[indexPath.row]) m/s"
+        detailedWindDirectionLabel.text = "Wind direction \(deg[indexPath.row])º"
+        detailedWindGustLabel.text = "Wind gust \(gust[indexPath.row]) m/s"
+        
+        
+        
+        
+        
+        detailedView.isHidden = false
+        print("було нажато на ячейку з номером \(indexPath.row)")
+    }
     
     
 }

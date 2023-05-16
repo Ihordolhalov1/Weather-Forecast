@@ -57,7 +57,17 @@ struct WeatherForecast {
     var conditionCodeForecast: [Int] = []
     var temperatureForecast: [Double] = []
     var feelsLikeForecast: [Double] = []
+    var description: [String] = []
+    var humidity: [Double] = []
+    var pressure: [Double] = []
+    var cloudiness: [Int] = []
+    var pop: [Double] = []
+    var visibility: [Int] = []
     var pod: [String] = []  // масив день або ніч
+    var speed: [Double] = []
+    var deg: [Int] = []
+    var gust: [Double] = []
+    
     
     init?(currentWeatherData: WeatherForecastData) {
         cityName = currentWeatherData.city.name
@@ -82,8 +92,15 @@ struct WeatherForecast {
                 feelsLikeForecast.append(currentWeatherData.list[index].main.feelsLike)
                 conditionCodeForecast.append(currentWeatherData.list[index].weather.first!.id)
                 pod.append(currentWeatherData.list[index].sys.pod.rawValue)
-                
-                
+                speed.append(currentWeatherData.list[index].wind.speed)
+                deg.append(currentWeatherData.list[index].wind.deg)
+                gust.append(currentWeatherData.list[index].wind.gust)
+                description.append(currentWeatherData.list[index].weather.first!.description)
+                pressure.append(currentWeatherData.list[index].main.pressure)
+                humidity.append(currentWeatherData.list[index].main.humidity)
+                cloudiness.append(currentWeatherData.list[index].clouds.all)
+                pop.append(currentWeatherData.list[index].pop)
+                visibility.append(currentWeatherData.list[index].visibility)
             }
         }
     }
