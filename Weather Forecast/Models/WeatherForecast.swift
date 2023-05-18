@@ -28,7 +28,7 @@ struct WeatherForecast {
     }
     
     let conditionCode: Int
-    
+    var degree: Int
     var systemDayIconNameString: String {
         switch conditionCode {
         case 200...232: return "cloud.bolt.rain.fill"
@@ -41,6 +41,7 @@ struct WeatherForecast {
         default: return "nosign"
         }
     }
+    
     var systemNightIconNameString: String {
         switch conditionCode {
         case 200...232: return "cloud.bolt.rain.fill"
@@ -53,6 +54,24 @@ struct WeatherForecast {
         default: return "nosign"
         }
     }
+    
+    var systemArrowString: String {
+        switch degree {
+        case 0...22: return "arrow.up"
+        case 23...68: return "arrow.up.right"
+        case 69...113: return "arrow.right"
+        case 114...158: return "arrow.down.right"
+        case 159...203: return "arrow.down"
+        case 204...247: return "arrow.down.left"
+        case 248...292: return "arrow.left"
+        case 293...337: return "arrow.up.left"
+        case 338...360: return "arrow.up"
+        default: return "nosign"
+        }
+    }
+    
+    
+    
     var date: [String] = [] //масив дат
     var conditionCodeForecast: [Int] = []
     var temperatureForecast: [Double] = []
@@ -61,11 +80,12 @@ struct WeatherForecast {
     var humidity: [Double] = []
     var pressure: [Double] = []
     var cloudiness: [Int] = []
-    var pop: [Double] = []
+    var pop: [Int] = []
     var visibility: [Int] = []
     var pod: [String] = []  // масив день або ніч
     var speed: [Double] = []
     var deg: [Int] = []
+    var windDirectionString: [String] = []
     var gust: [Double] = []
     
     
@@ -74,7 +94,8 @@ struct WeatherForecast {
         temperature = currentWeatherData.list.first!.main.temp
         feelsLikeTemperature = currentWeatherData.list.first!.main.feelsLike
         conditionCode = currentWeatherData.list.first!.weather.first!.id
-        
+        degree = currentWeatherData.list.first!.wind.deg
+
         country = currentWeatherData.city.country
         population = currentWeatherData.city.population
         timezone = currentWeatherData.city.timezone
@@ -99,8 +120,10 @@ struct WeatherForecast {
                 pressure.append(currentWeatherData.list[index].main.pressure)
                 humidity.append(currentWeatherData.list[index].main.humidity)
                 cloudiness.append(currentWeatherData.list[index].clouds.all)
-                pop.append(currentWeatherData.list[index].pop)
+                pop.append(Int(currentWeatherData.list[index].pop * 100))
                 visibility.append(currentWeatherData.list[index].visibility)
+                degree = currentWeatherData.list[index].wind.deg
+                windDirectionString.append(systemArrowString)
             }
         }
     }

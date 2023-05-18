@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -18,11 +18,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var detailedView: DetailedView!
     
+    @IBOutlet weak var cityView: UIView!
+    
+    
     @IBOutlet weak var weatherTable: UITableView!
     
     @IBOutlet weak var detailedTempLabel: UILabel!
     @IBOutlet weak var detailedLikeTempLabel: UILabel!
-
+    
     @IBOutlet weak var detailedWeatherDescriptionLabel: UILabel!
     @IBOutlet weak var detailedPressureLabel: UILabel!
     @IBOutlet weak var detailedHumidityLabel: UILabel!
@@ -33,8 +36,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var detailedWindDirectionLabel: UILabel!
     @IBOutlet weak var detailedWindGustLabel: UILabel!
     
+    @IBOutlet weak var cityNameLabel: UILabel!
+    @IBOutlet weak var countryNameLabel: UILabel!
+    @IBOutlet weak var populationLabel: UILabel!
     
-    
+    @IBOutlet weak var windDirection: UIImageView!
     
     
     
@@ -53,14 +59,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var pod: [String] = []
     var shift: Int  = 0
     var speed: [Double] = []
-    var pop: [Double] = []
+    var pop: [Int] = []
     var visibility: [Int] = []
     var deg: [Int] = []
+    var windDirectionString: [String] = []
     var gust: [Double] = []
+    
+    var country:String = ""
     var population: Int  = 0
     var sunrise: Int = 0
     var sunset: Int = 0
-   
+    
     
     
     
@@ -82,6 +91,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.networkWeatherManager.fetchCurrentWeather(forRequestType: .cityName(city: city))
         }
     }
+    
+    @IBAction func geolocationButtonPressed(_ sender: Any) {
+        
+    }
+    
+    
+    @IBAction func informationButtonPressed(_ sender: Any) {
+        cityView.isHidden = false
+        cityNameLabel.text = cityLabel.text
+        countryNameLabel.text = country
+        populationLabel.text = "\(population)"
+    }
+    
+    @IBAction func cityCloseButtonPressed(_ sender: Any) {
+        cityView.isHidden = true
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,7 +146,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         detailedView.layer.cornerRadius = 10
         detailedView.isHidden = true
-    
+        cityView.isHidden = true
+        cityView.layer.cornerRadius = 10
         
     }
     
@@ -129,6 +156,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.cityLabel.text = weather.cityName
             self.temperatureLabel.text = weather.temperatureString
             self.feelsLikeTemperatureLabel.text = weather.feelsLikeTemperatureString
+            
             self.weatherIconImageView.image = UIImage(systemName: weather.systemDayIconNameString)
             
             self.dateString = weather.date
@@ -144,9 +172,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.cloudiness = weather.cloudiness
             self.pop = weather.pop
             self.visibility = weather.visibility
-            self.deg = weather.deg
-            self.gust = weather.gust
             
+            self.deg = weather.deg
+            self.windDirectionString = weather.windDirectionString
+            self.gust = weather.gust
+            self.country = weather.country
+            self.population = weather.population
             
             self.weatherTable.reloadData()
            
@@ -262,26 +293,23 @@ extension ViewController: CLLocationManagerDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        detailedTempLabel.text = "Temperature \(temperatureForecast[indexPath.row]) ºC"
-        detailedLikeTempLabel.text = "Feels like temperature \(feelsLikeForecast[indexPath.row]) ºC"
+        detailedTempLabel.text = " \(temperatureForecast[indexPath.row]) ºC"
+        detailedLikeTempLabel.text = " \(feelsLikeForecast[indexPath.row]) ºC"
       
-        detailedWeatherDescriptionLabel.text = "It will be \(weatherDescription[indexPath.row])"
+        detailedWeatherDescriptionLabel.text = " \(weatherDescription[indexPath.row])"
         
-        detailedPressureLabel.text = "Pressure \(pressure[indexPath.row]) hPa"
-        detailedHumidityLabel.text = "Humidity \(humidity[indexPath.row])%"
-        detailedCloudityLabel.text = "Cloudiness \(cloudiness[indexPath.row])%"
-        detailedProbabilityLabel.text = "Probability of precipitation \(pop[indexPath.row])%"
-        detailedVisibilityLabel.text = "Visibility \(visibility[indexPath.row]) meters"
-        detailedWindSpeedLabel.text = "Wind speed \(speed[indexPath.row]) m/s"
+        detailedPressureLabel.text = " \(pressure[indexPath.row]) hPa"
+        detailedHumidityLabel.text = " \(humidity[indexPath.row])%"
+        detailedCloudityLabel.text = " \(cloudiness[indexPath.row])%"
+        detailedProbabilityLabel.text = "\(pop[indexPath.row])%"
+        detailedVisibilityLabel.text = " \(visibility[indexPath.row]) meters"
+        detailedWindSpeedLabel.text = " \(speed[indexPath.row]) m/s"
         detailedWindDirectionLabel.text = "Wind direction \(deg[indexPath.row])º"
-        detailedWindGustLabel.text = "Wind gust \(gust[indexPath.row]) m/s"
-        
-        
-        
-        
+        windDirection.image = UIImage(systemName: windDirectionString[indexPath.row])
+        detailedWindGustLabel.text = " \(gust[indexPath.row]) m/s"
         
         detailedView.isHidden = false
-        print("було нажато на ячейку з номером \(indexPath.row)")
+        
     }
     
     
