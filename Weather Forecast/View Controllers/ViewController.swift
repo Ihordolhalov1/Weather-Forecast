@@ -93,7 +93,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     @IBAction func geolocationButtonPressed(_ sender: Any) {
-        
+        locationManager.requestWhenInUseAuthorization()
+       
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            if let coordinates = locationManager.location?.coordinate {
+                let geocoder = CLGeocoder()
+                let location = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
+                let latitude = location.coordinate.latitude
+                let longitude = location.coordinate.longitude
+                print (latitude)
+                print (longitude)
+                let locale = Locale(identifier: "en_GB")
+                // Reverse geocode coordinates to get city name
+                geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+                    if let placemark = placemarks?.first {
+                        if let city = placemark.locality {
+                            // Update label text with city name
+                            self.cityLabel.text = city
+                            self.networkWeatherManager.fetchCurrentWeather(forRequestType: .coordinate(latitude: latitude, longitude: longitude))
+
+                        }
+                    }
+                }
+            }
+        }
     }
     
     
@@ -120,6 +143,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.updateInterfaceWith(weather: currentWeather)
         }
 
+        locationManager.requestWhenInUseAuthorization()
             if CLLocationManager.locationServicesEnabled() {
                 if #available(iOS 14.0, *) {
                     switch self.locationManager.authorizationStatus {
