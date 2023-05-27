@@ -11,12 +11,14 @@ import CoreLocation
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var mainPhotoImage: UIImageView!
+    
     @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var feelsLikeTemperatureLabel: UILabel!
     
-    @IBOutlet weak var detailedView: DetailedView!
+    @IBOutlet weak var detailedView: UIView!
     
     @IBOutlet weak var cityView: UIView!
     
@@ -43,6 +45,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var windDirection: UIImageView!
     
     
+    var heightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var weatherTableViewHeightConstraint: NSLayoutConstraint!
     
     
     
@@ -73,7 +77,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     
-    
+   
+
+  
     
     lazy var locationManager: CLLocationManager = {
         let lm = CLLocationManager()
@@ -121,6 +127,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     @IBAction func informationButtonPressed(_ sender: Any) {
+        detailedView.isHidden = true
         cityView.isHidden = false
         cityNameLabel.text = cityLabel.text
         countryNameLabel.text = country
@@ -132,25 +139,65 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     
+    // зміна розміру висоти tableview від пальця
+    @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+        let translation = gestureRecognizer.translation(in: view)
+        
+        if let view = gestureRecognizer.view {
+            // Calculate the new constant for the height constraint
+            var newHeight = heightConstraint.constant - translation.y
+            
+            // Update the height constraint based on the dragging motion
+            
+            if newHeight < 100 {
+                newHeight = 100
+            } else {
+                if newHeight > 900
+                { newHeight = 900 }
+                else {
+                   // nothing need to be changed
+                }
+            }
+            heightConstraint.constant = newHeight
+            weatherTableViewHeightConstraint = heightConstraint
+            // Reset the translation
+            gestureRecognizer.setTranslation(CGPoint.zero, in: view)
+        }
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        locationManager.delegate = self
         weatherTable.dataSource = self
         weatherTable.delegate = self
         
-        networkWeatherManager.onCompletion = { [weak self] currentWeather in
+        
+        heightConstraint = weatherTableViewHeightConstraint
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+            weatherTable.addGestureRecognizer(panGesture)
+        
+        let randomNum = Int(arc4random_uniform(10)) + 1
+        let name = "\(randomNum).heic"
+        mainPhotoImage.image = UIImage(named: name)
+        print (randomNum)
+        print (name)
+        
+        
+         networkWeatherManager.onCompletion = { [weak self] currentWeather in
             guard let self = self else { return }
             self.updateInterfaceWith(weather: currentWeather)
         }
 
         locationManager.requestWhenInUseAuthorization()
+        
             if CLLocationManager.locationServicesEnabled() {
                 if #available(iOS 14.0, *) {
                     switch self.locationManager.authorizationStatus {
                     case .restricted, .denied:
-                        print("No access")
+                        print("RESTRICTED")
                     case .notDetermined, .authorizedAlways, .authorizedWhenInUse:
-                        print("Access")
+                        print("ACCESS")
                         self.locationManager.requestLocation()
                         networkWeatherManager.onCompletion = { [weak self] currentWeather in
                             guard let self = self else { return }
@@ -158,11 +205,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         }
                         
                     @unknown default:
+                        print("UNKNOWN DEFAULT")
                         break
                     }
                 } else {
                     //якщо версія нижще 14
+                    print("VERSION LOW THAN 14")
                     self.locationManager.requestLocation()
+                    networkWeatherManager.onCompletion = { [weak self] currentWeather in
+                        guard let self = self else { return }
+                        self.updateInterfaceWith(weather: currentWeather)
+                    }
                 }
             }
             else {
@@ -225,6 +278,22 @@ extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
     }
+   
+    // Implement the delegate method to handle authorization status changes
+        func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+            if status == .authorizedWhenInUse {
+                self.locationManager.requestLocation()
+                networkWeatherManager.onCompletion = { [weak self] currentWeather in
+                    guard let self = self else { return }
+                    self.updateInterfaceWith(weather: currentWeather)
+                }
+            }
+        }
+    
+    
+    
+    
+    // MARK: - TableView
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return countOfDate
@@ -243,7 +312,7 @@ extension ViewController: CLLocationManagerDelegate {
             
             
         //WindSpeed
-            if speed == [] {cell.windLabel.text = "Do not have date"} else {
+            if speed == [] {cell.windLabel.text = "Unknown location"} else {
                 print ("I will fulfil the table now with wind speed")
                 var speedString: String {
                     return String(format: "%.1f", speed[indexPath.row])
@@ -272,7 +341,7 @@ extension ViewController: CLLocationManagerDelegate {
             }
             
             //Date
-            if dateString == [] {cell.dateLabel.text = "Do not have date"} else {
+            if dateString == [] {cell.dateLabel.text = "Unknown location"} else {
                 print ("I will fulfil the table now with date")
                 let dateFormatter = DateFormatter()
                 dateFormatter.locale = Locale(identifier: "en_US")
@@ -317,6 +386,7 @@ extension ViewController: CLLocationManagerDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        cityView.isHidden = true
         detailedTempLabel.text = " \(temperatureForecast[indexPath.row]) ºC"
         detailedLikeTempLabel.text = " \(feelsLikeForecast[indexPath.row]) ºC"
       
