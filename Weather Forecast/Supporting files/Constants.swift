@@ -10,3 +10,4 @@ import Foundation
 
 let apiKey = "ac8c9824a81c3172c80c0b8ba3252a1f"
 var countOfDate = 20
+//let weatherForecastLink =

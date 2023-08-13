@@ -13,6 +13,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var mainPhotoImage: UIImageView!
     
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -91,10 +92,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func closeButtonPressed(_ sender: Any) {
         detailedView.isHidden = true
+        stackView.isHidden = false
     }
     @IBAction func searchPressed(_ sender: UIButton) {
         self.presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) { [unowned self] city in
-            self.networkWeatherManager.fetchCurrentWeather(forRequestType: .cityName(city: city))
+            self.networkWeatherManager.fetchWeatherForecast(forRequestType: .cityName(city: city))
         }
     }
     
@@ -109,13 +111,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let longitude = location.coordinate.longitude
                 print (latitude)
                 print (longitude)
-                let locale = Locale(identifier: "en_GB")
+            //let locale = Locale(identifier: "en_GB")
                 // Reverse geocode coordinates to get city name
                 geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
                     if let placemark = placemarks?.first {
                         if let city = placemark.locality {
                             // Update label text with city name
                             self.cityLabel.text = city
+                            self.networkWeatherManager.fetchWeatherForecast(forRequestType: .coordinate(latitude: latitude, longitude: longitude))
                             self.networkWeatherManager.fetchCurrentWeather(forRequestType: .coordinate(latitude: latitude, longitude: longitude))
 
                         }
@@ -128,6 +131,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func informationButtonPressed(_ sender: Any) {
         detailedView.isHidden = true
+        stackView.isHidden = true
         cityView.isHidden = false
         cityNameLabel.text = cityLabel.text
         countryNameLabel.text = country
@@ -136,6 +140,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func cityCloseButtonPressed(_ sender: Any) {
         cityView.isHidden = true
+        stackView.isHidden = false
     }
     
     
@@ -171,7 +176,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         locationManager.delegate = self
         weatherTable.dataSource = self
         weatherTable.delegate = self
-        
+        stackView.isHidden = false
         
         heightConstraint = weatherTableViewHeightConstraint
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
@@ -183,11 +188,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         print (randomNum)
         print (name)
         
+        networkWeatherManager.onCompletionForecast = { [weak self] Weather in
+           guard let self = self else { return }
+           self.updateInterfaceWith(weather: Weather)
+       }
+        networkWeatherManager.onCompletionCurrent = { [weak self] Weather in
+           guard let self = self else { return }
+           self.updateInterfaceWith(weather: Weather)
+       }
         
-         networkWeatherManager.onCompletion = { [weak self] currentWeather in
-            guard let self = self else { return }
-            self.updateInterfaceWith(weather: currentWeather)
-        }
+        
 
         locationManager.requestWhenInUseAuthorization()
         
@@ -199,7 +209,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     case .notDetermined, .authorizedAlways, .authorizedWhenInUse:
                         print("ACCESS")
                         self.locationManager.requestLocation()
-                        networkWeatherManager.onCompletion = { [weak self] currentWeather in
+                        networkWeatherManager.onCompletionForecast = { [weak self] currentWeather in
                             guard let self = self else { return }
                             self.updateInterfaceWith(weather: currentWeather)
                         }
@@ -212,7 +222,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     //якщо версія нижще 14
                     print("VERSION LOW THAN 14")
                     self.locationManager.requestLocation()
-                    networkWeatherManager.onCompletion = { [weak self] currentWeather in
+                    networkWeatherManager.onCompletionForecast = { [weak self] currentWeather in
                         guard let self = self else { return }
                         self.updateInterfaceWith(weather: currentWeather)
                     }
@@ -228,11 +238,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
+    func updateInterfaceWith(weather: CurrentWeather) {
+        DispatchQueue.main.async {
+            self.temperatureLabel.text = weather.temperatureString
+            self.feelsLikeTemperatureLabel.text = weather.feelsLikeTemperatureString
+       
+        }
+    }
+    
     func updateInterfaceWith(weather: WeatherForecast) {
         DispatchQueue.main.async {
             self.cityLabel.text = weather.cityName
-            self.temperatureLabel.text = weather.temperatureString
-            self.feelsLikeTemperatureLabel.text = weather.feelsLikeTemperatureString
+       //     self.temperatureLabel.text = weather.temperatureString
+       //     self.feelsLikeTemperatureLabel.text = weather.feelsLikeTemperatureString
             
             self.weatherIconImageView.image = UIImage(systemName: weather.systemDayIconNameString)
             
@@ -272,6 +290,7 @@ extension ViewController: CLLocationManagerDelegate {
         let longitude = location.coordinate.longitude
         print("відпрацював метод locationManager по координатам")
         debugPrint(latitude, longitude)
+        networkWeatherManager.fetchWeatherForecast(forRequestType: .coordinate(latitude: latitude, longitude: longitude))
         networkWeatherManager.fetchCurrentWeather(forRequestType: .coordinate(latitude: latitude, longitude: longitude))
     }
     
@@ -283,10 +302,18 @@ extension ViewController: CLLocationManagerDelegate {
         func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
             if status == .authorizedWhenInUse {
                 self.locationManager.requestLocation()
-                networkWeatherManager.onCompletion = { [weak self] currentWeather in
+                
+                networkWeatherManager.onCompletionForecast = { [weak self] Weather in
                     guard let self = self else { return }
-                    self.updateInterfaceWith(weather: currentWeather)
+                    self.updateInterfaceWith(weather: Weather)
                 }
+                
+                networkWeatherManager.onCompletionCurrent = { [weak self] Weather in
+                   guard let self = self else { return }
+                   self.updateInterfaceWith(weather: Weather)
+               }
+                
+                
             }
         }
     
@@ -387,6 +414,7 @@ extension ViewController: CLLocationManagerDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         cityView.isHidden = true
+        stackView.isHidden = true
         detailedTempLabel.text = " \(temperatureForecast[indexPath.row]) ºC"
         detailedLikeTempLabel.text = " \(feelsLikeForecast[indexPath.row]) ºC"
       

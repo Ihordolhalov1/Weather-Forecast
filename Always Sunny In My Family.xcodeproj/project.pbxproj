@@ -20,10 +20,13 @@
 		35BF722D24111ECB002622D2 /* WeatherForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BF722C24111ECB002622D2 /* WeatherForecast.swift */; };
 		5D0B503529F1CC1700E4D40D /* Common structure in Resources */ = {isa = PBXBuildFile; fileRef = 5D0B503429F1CC1700E4D40D /* Common structure */; };
 		5D14CBE62A0934A10062A578 /* weatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D14CBE52A0934A10062A578 /* weatherTableViewCell.swift */; };
+		5D566F7B2A89306700E65D34 /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D566F7A2A89306700E65D34 /* CurrentWeather.swift */; };
+		5D566F7D2A89393C00E65D34 /* CurrentWeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D566F7C2A89393C00E65D34 /* CurrentWeatherData.swift */; };
+		5D7EF1FD2A646CC200355B4B /* descriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7EF1FC2A646CC200355B4B /* descriptions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		352AD25D2403FA5700FE672A /* Weather Forecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather Forecast.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		352AD25D2403FA5700FE672A /* Always Sunny In My Family.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Always Sunny In My Family.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		352AD2602403FA5700FE672A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		352AD2622403FA5700FE672A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		352AD2642403FA5700FE672A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +41,9 @@
 		35BF722C24111ECB002622D2 /* WeatherForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecast.swift; sourceTree = "<group>"; };
 		5D0B503429F1CC1700E4D40D /* Common structure */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Common structure"; sourceTree = "<group>"; };
 		5D14CBE52A0934A10062A578 /* weatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weatherTableViewCell.swift; sourceTree = "<group>"; };
+		5D566F7A2A89306700E65D34 /* CurrentWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
+		5D566F7C2A89393C00E65D34 /* CurrentWeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherData.swift; sourceTree = "<group>"; };
+		5D7EF1FC2A646CC200355B4B /* descriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = descriptions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +68,7 @@
 		352AD25E2403FA5700FE672A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				352AD25D2403FA5700FE672A /* Weather Forecast.app */,
+				352AD25D2403FA5700FE672A /* Always Sunny In My Family.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,6 +88,7 @@
 		352AD2742404048C00FE672A /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
+				5D7EF1FC2A646CC200355B4B /* descriptions.swift */,
 				353272CF24092579000686B3 /* Constants.swift */,
 				352AD2602403FA5700FE672A /* AppDelegate.swift */,
 				352AD2622403FA5700FE672A /* SceneDelegate.swift */,
@@ -105,8 +112,10 @@
 			children = (
 				353272CD240924DA000686B3 /* NetworkWeatherManager.swift */,
 				35BF722C24111ECB002622D2 /* WeatherForecast.swift */,
-				5D0B503429F1CC1700E4D40D /* Common structure */,
 				35BF72242411172C002622D2 /* WeatherForecastData.swift */,
+				5D566F7A2A89306700E65D34 /* CurrentWeather.swift */,
+				5D566F7C2A89393C00E65D34 /* CurrentWeatherData.swift */,
+				5D0B503429F1CC1700E4D40D /* Common structure */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -131,9 +140,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		352AD25C2403FA5700FE672A /* Weather Forecast */ = {
+		352AD25C2403FA5700FE672A /* Always Sunny In My Family */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 352AD2712403FA5800FE672A /* Build configuration list for PBXNativeTarget "Weather Forecast" */;
+			buildConfigurationList = 352AD2712403FA5800FE672A /* Build configuration list for PBXNativeTarget "Always Sunny In My Family" */;
 			buildPhases = (
 				352AD2592403FA5700FE672A /* Sources */,
 				352AD25A2403FA5700FE672A /* Frameworks */,
@@ -143,9 +152,9 @@
 			);
 			dependencies = (
 			);
-			name = "Weather Forecast";
+			name = "Always Sunny In My Family";
 			productName = Sunny;
-			productReference = 352AD25D2403FA5700FE672A /* Weather Forecast.app */;
+			productReference = 352AD25D2403FA5700FE672A /* Always Sunny In My Family.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -164,7 +173,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 352AD2582403FA5700FE672A /* Build configuration list for PBXProject "Weather Forecast" */;
+			buildConfigurationList = 352AD2582403FA5700FE672A /* Build configuration list for PBXProject "Always Sunny In My Family" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -177,7 +186,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				352AD25C2403FA5700FE672A /* Weather Forecast */,
+				352AD25C2403FA5700FE672A /* Always Sunny In My Family */,
 			);
 		};
 /* End PBXProject section */
@@ -202,11 +211,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				352AD2652403FA5700FE672A /* ViewController.swift in Sources */,
+				5D566F7B2A89306700E65D34 /* CurrentWeather.swift in Sources */,
 				352AD27B2404DD6600FE672A /* ViewController+alertController.swift in Sources */,
 				35BF722D24111ECB002622D2 /* WeatherForecast.swift in Sources */,
 				353272CE240924DA000686B3 /* NetworkWeatherManager.swift in Sources */,
+				5D7EF1FD2A646CC200355B4B /* descriptions.swift in Sources */,
 				352AD2612403FA5700FE672A /* AppDelegate.swift in Sources */,
 				5D14CBE62A0934A10062A578 /* weatherTableViewCell.swift in Sources */,
+				5D566F7D2A89393C00E65D34 /* CurrentWeatherData.swift in Sources */,
 				352AD2632403FA5700FE672A /* SceneDelegate.swift in Sources */,
 				35BF72252411172C002622D2 /* WeatherForecastData.swift in Sources */,
 				353272D024092579000686B3 /* Constants.swift in Sources */,
@@ -355,9 +367,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WXTVGCYAQM;
 				INFOPLIST_FILE = "Weather Forecast/Supporting files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -373,9 +387,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WXTVGCYAQM;
 				INFOPLIST_FILE = "Weather Forecast/Supporting files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -390,7 +406,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		352AD2582403FA5700FE672A /* Build configuration list for PBXProject "Weather Forecast" */ = {
+		352AD2582403FA5700FE672A /* Build configuration list for PBXProject "Always Sunny In My Family" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				352AD26F2403FA5800FE672A /* Debug */,
@@ -399,7 +415,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		352AD2712403FA5800FE672A /* Build configuration list for PBXNativeTarget "Weather Forecast" */ = {
+		352AD2712403FA5800FE672A /* Build configuration list for PBXNativeTarget "Always Sunny In My Family" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				352AD2722403FA5800FE672A /* Debug */,
