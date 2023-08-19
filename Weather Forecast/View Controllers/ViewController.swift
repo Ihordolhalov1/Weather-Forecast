@@ -9,8 +9,10 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
+
+
     @IBOutlet weak var mainPhotoImage: UIImageView!
     
     @IBOutlet weak var stackView: UIStackView!
@@ -22,6 +24,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var detailedView: UIView!
     
     @IBOutlet weak var cityView: UIView!
+    
+    @IBOutlet weak var settingsView: UIView!
+  
+    @IBOutlet weak var mainPhotoIcon: UIImageView!
     
     
     @IBOutlet weak var weatherTable: UITableView!
@@ -75,7 +81,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var sunrise: Int = 0
     var sunset: Int = 0
     
-    
+    var isMainPhotoChosen = false
     
     
    
@@ -132,6 +138,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBAction func informationButtonPressed(_ sender: Any) {
         detailedView.isHidden = true
         stackView.isHidden = true
+        settingsView.isHidden = true
         cityView.isHidden = false
         cityNameLabel.text = cityLabel.text
         countryNameLabel.text = country
@@ -171,8 +178,82 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     
+    @IBAction func settingButtonPressed(_ sender: Any) {
+        cityView.isHidden = true
+        detailedView.isHidden = true
+        stackView.isHidden = false
+        settingsView.isHidden = !settingsView.isHidden
+        
+    }
+    
+    // MARK: Choose main photo from the library
+    
+   
+
+    
+   
+    
+    func openPhotoGallery() {
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.allowsEditing = true
+            present(imagePicker, animated: true, completion: nil)
+        }
+    } //функція вибора фото
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+
+        if let selectedImage = info[.originalImage] as? UIImage {
+            mainPhotoIcon.image = selectedImage
+            mainPhotoImage.image = selectedImage
+            
+            guard let data = selectedImage.jpegData(compressionQuality: 1) else { return }
+            let encoded = try! PropertyListEncoder().encode(data)
+            UserDefaults.standard.set(encoded, forKey: "MainPhoto")
+        }
+    }
+
+    
+
+  
+    
+    
+    @objc func MainPhotoIconImageTapped() {
+           // Handle the tap on the UIImageView here
+           print("Image tapped!")
+        openPhotoGallery()
+
+       }
+    
+
+    
+    
+    @IBAction func doneButtonPressed(_ sender: Any) {
+        settingsView.isHidden = true
+    }
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Detect that MainPhotoIconImage was tapped
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainPhotoIconImageTapped))
+                mainPhotoIcon.addGestureRecognizer(tapGestureRecognizer)
+                mainPhotoIcon.isUserInteractionEnabled = true
+        mainPhotoImage.isUserInteractionEnabled = true
+        mainPhotoImage.addGestureRecognizer(tapGestureRecognizer)
+
+        
+        
+       // чомусь повертає картинку на 90 градусів. Силомиць повертаю назад
+     //   let rotationAngle: CGFloat = CGFloat.pi / 2 // 90 degrees in radians
+     //   mainPhotoIcon.transform = CGAffineTransform(rotationAngle: rotationAngle)
+        
+        
         locationManager.delegate = self
         weatherTable.dataSource = self
         weatherTable.delegate = self
@@ -182,11 +263,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
             weatherTable.addGestureRecognizer(panGesture)
         
-        let randomNum = Int(arc4random_uniform(10)) + 1
-        let name = "\(randomNum).heic"
-        mainPhotoImage.image = UIImage(named: name)
-        print (randomNum)
-        print (name)
+        //let randomNum = Int(arc4random_uniform(10)) + 1
+       // let name = "\(randomNum).heic"
+         let name = "emptyPhoto.png"
+         mainPhotoImage.image = UIImage(named: name)
+       // mainPhotoImage.image = UIImage(systemName: "person.crop.rectangle.fill")
+
+            guard let data = UserDefaults.standard.data(forKey: "MainPhoto") else { return }
+             let decoded = try! PropertyListDecoder().decode(Data.self, from: data)
+        mainPhotoImage.image = UIImage(data: decoded)
+    
+        
+        
         
         networkWeatherManager.onCompletionForecast = { [weak self] Weather in
            guard let self = self else { return }
@@ -235,6 +323,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         detailedView.isHidden = true
         cityView.isHidden = true
         cityView.layer.cornerRadius = 10
+        settingsView.isHidden = true
+        settingsView.layer.cornerRadius = 10
         
     }
     
@@ -249,9 +339,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func updateInterfaceWith(weather: WeatherForecast) {
         DispatchQueue.main.async {
             self.cityLabel.text = weather.cityName
-       //     self.temperatureLabel.text = weather.temperatureString
-       //     self.feelsLikeTemperatureLabel.text = weather.feelsLikeTemperatureString
-            
+     
             self.weatherIconImageView.image = UIImage(systemName: weather.systemDayIconNameString)
             
             self.dateString = weather.date
@@ -415,20 +503,39 @@ extension ViewController: CLLocationManagerDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         cityView.isHidden = true
         stackView.isHidden = true
-        detailedTempLabel.text = " \(temperatureForecast[indexPath.row]) ºC"
-        detailedLikeTempLabel.text = " \(feelsLikeForecast[indexPath.row]) ºC"
-      
-        detailedWeatherDescriptionLabel.text = " \(weatherDescription[indexPath.row])"
+        settingsView.isHidden = true
+        if temperatureForecast.isEmpty {
+            detailedTempLabel.text = "N/A"
+            detailedLikeTempLabel.text = "N/A"
+            detailedWeatherDescriptionLabel.text = "N/A"
+            detailedPressureLabel.text = "N/A"
+            detailedHumidityLabel.text = "N/A"
+            detailedCloudityLabel.text = "N/A"
+            detailedProbabilityLabel.text = "N/A"
+            detailedVisibilityLabel.text = "N/A"
+            detailedWindSpeedLabel.text = "N/A"
+            detailedWindDirectionLabel.text = "N/A"
+            detailedWindGustLabel.text = "N/A"
+            
+        } else
         
-        detailedPressureLabel.text = " \(pressure[indexPath.row]) hPa"
-        detailedHumidityLabel.text = " \(humidity[indexPath.row])%"
-        detailedCloudityLabel.text = " \(cloudiness[indexPath.row])%"
-        detailedProbabilityLabel.text = "\(pop[indexPath.row])%"
-        detailedVisibilityLabel.text = " \(visibility[indexPath.row]) meters"
-        detailedWindSpeedLabel.text = " \(speed[indexPath.row]) m/s"
-        detailedWindDirectionLabel.text = "Wind direction \(deg[indexPath.row])º"
-        windDirection.image = UIImage(systemName: windDirectionString[indexPath.row])
-        detailedWindGustLabel.text = " \(gust[indexPath.row]) m/s"
+        { detailedTempLabel.text = " \(temperatureForecast[indexPath.row]) ºC"
+            
+            detailedLikeTempLabel.text = " \(feelsLikeForecast[indexPath.row]) ºC"
+            
+            detailedWeatherDescriptionLabel.text = " \(weatherDescription[indexPath.row])"
+            
+            detailedPressureLabel.text = " \(pressure[indexPath.row]) hPa"
+            detailedHumidityLabel.text = " \(humidity[indexPath.row])%"
+            detailedCloudityLabel.text = " \(cloudiness[indexPath.row])%"
+            detailedProbabilityLabel.text = "\(pop[indexPath.row])%"
+            detailedVisibilityLabel.text = " \(visibility[indexPath.row]) meters"
+            detailedWindSpeedLabel.text = " \(speed[indexPath.row]) m/s"
+            detailedWindDirectionLabel.text = "Wind direction \(deg[indexPath.row])º"
+            windDirection.image = UIImage(systemName: windDirectionString[indexPath.row])
+            detailedWindGustLabel.text = " \(gust[indexPath.row]) m/s"
+            
+        }
         
         detailedView.isHidden = false
         
