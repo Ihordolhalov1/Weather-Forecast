@@ -13,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Always_Sunny_In_My_Family" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Personal_Forecast_Browser" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,6 +22,11 @@
                                 <rect key="frame" x="0.0" y="877.33333333333326" width="414" height="17.333333333333371"/>
                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" id="WPp-Pj-29v">
+                                <rect key="frame" x="0.0" y="429" width="414" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" systemColor="tintColor"/>
+                            </activityIndicatorView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zjh-XY-7pK" userLabel="HighStack City Label and Buttons">
                                 <rect key="frame" x="48" y="59" width="351" height="30"/>
                                 <subviews>
@@ -135,14 +140,14 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <tableView clipsSubviews="YES" alpha="0.90000000000000002" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Xlg-2F-5oR" customClass="weatherTable" customModule="Always_Sunny_In_My_Family" customModuleProvider="target">
+                            <tableView clipsSubviews="YES" alpha="0.90000000000000002" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Xlg-2F-5oR" customClass="weatherTable" customModule="Personal_Forecast_Browser" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="796" width="414" height="100"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="YQv-X7-9BO"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="weatherTableViewCell" id="Im1-zh-MsD" customClass="weatherTableViewCell" customModule="Always_Sunny_In_My_Family" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="weatherTableViewCell" id="Im1-zh-MsD" customClass="weatherTableViewCell" customModule="Personal_Forecast_Browser" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Im1-zh-MsD" id="Qee-YY-AIf">
@@ -203,7 +208,7 @@
                                 </prototypes>
                             </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CbE-Yu-jni" userLabel="CityView">
-                                <rect key="frame" x="39" y="847.66666666666663" width="335" height="130"/>
+                                <rect key="frame" x="39" y="847.66666666666663" width="335" height="129.99999999999989"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="VgK-JI-XDY">
                                         <rect key="frame" x="34" y="17" width="266" height="95"/>
@@ -282,7 +287,7 @@
                                     <constraint firstAttribute="trailing" secondItem="nbq-d9-rfY" secondAttribute="trailing" constant="8" id="jmm-yy-k3Q"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QPq-70-QCa" userLabel="DetailedView" customClass="DetailedView" customModule="Always_Sunny_In_My_Family" customModuleProvider="target">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QPq-70-QCa" userLabel="DetailedView" customClass="DetailedView" customModule="Personal_Forecast_Browser" customModuleProvider="target">
                                 <rect key="frame" x="39.666666666666657" y="54" width="335" height="360"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W1w-gv-6mR">
@@ -595,6 +600,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="WPp-Pj-29v" id="fgN-OD-gl7"/>
                         <outlet property="cityLabel" destination="CaG-8N-Smf" id="T3p-8y-ayR"/>
                         <outlet property="cityNameLabel" destination="7eY-iy-yMz" id="One-vp-9DT"/>
                         <outlet property="cityView" destination="CbE-Yu-jni" id="A8X-Ul-m9X"/>

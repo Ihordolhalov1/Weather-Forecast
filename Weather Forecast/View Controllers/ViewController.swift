@@ -11,7 +11,8 @@ import CoreLocation
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
-
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
 
     @IBOutlet weak var mainPhotoImage: UIImageView!
     
@@ -190,7 +191,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
    
     func openPhotoGallery() {
-       
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.sourceType = .photoLibrary
@@ -200,6 +203,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     } //функція вибора фото
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        self.activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
         picker.dismiss(animated: true, completion: nil)
 
         if let selectedImage = info[.originalImage] as? UIImage {
@@ -212,7 +217,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
-    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true) {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+
+        }
+    }
 
   
     
@@ -242,6 +253,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.isHidden = true
         //Detect that MainPhotoIconImage was tapped
         let tapGestureRecognizerIcon = UITapGestureRecognizer(target: self, action: #selector(MainPhotoIconTapped))
                 mainPhotoIcon.addGestureRecognizer(tapGestureRecognizerIcon)
