@@ -29,9 +29,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "352AD25C2403FA5700FE672A"
-            BuildableName = "Always Sunny In My Family.app"
-            BlueprintName = "Always Sunny In My Family"
-            ReferencedContainer = "container:Always sunny in my family.xcodeproj">
+            BuildableName = "Personal Forecast Browser.app"
+            BlueprintName = "Personal Forecast Browser"
+            ReferencedContainer = "container:Personal Forecast Browser.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "352AD25C2403FA5700FE672A"
-            BuildableName = "Always Sunny In My Family.app"
-            BlueprintName = "Always Sunny In My Family"
-            ReferencedContainer = "container:Always sunny in my family.xcodeproj">
+            BuildableName = "Personal Forecast Browser.app"
+            BlueprintName = "Personal Forecast Browser"
+            ReferencedContainer = "container:Personal Forecast Browser.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

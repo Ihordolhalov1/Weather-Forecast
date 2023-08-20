@@ -189,18 +189,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: Choose main photo from the library
     
    
-
-    
-   
-    
     func openPhotoGallery() {
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+       
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.sourceType = .photoLibrary
             imagePicker.allowsEditing = true
             present(imagePicker, animated: true, completion: nil)
-        }
+      
     } //функція вибора фото
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -221,13 +217,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
   
     
     
-    @objc func MainPhotoIconImageTapped() {
+    @objc func MainPhotoIconTapped() {
+           // Handle the tap on the UIImageView here
+           print("Icon tapped!")
+        openPhotoGallery()
+
+       }
+    
+    @objc func MainPhotoImageTapped() {
            // Handle the tap on the UIImageView here
            print("Image tapped!")
         openPhotoGallery()
 
        }
-    
 
     
     
@@ -241,19 +243,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         //Detect that MainPhotoIconImage was tapped
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MainPhotoIconImageTapped))
-                mainPhotoIcon.addGestureRecognizer(tapGestureRecognizer)
+        let tapGestureRecognizerIcon = UITapGestureRecognizer(target: self, action: #selector(MainPhotoIconTapped))
+                mainPhotoIcon.addGestureRecognizer(tapGestureRecognizerIcon)
                 mainPhotoIcon.isUserInteractionEnabled = true
+        let tapGestureRecognizerImage = UITapGestureRecognizer(target: self, action: #selector(MainPhotoImageTapped))
         mainPhotoImage.isUserInteractionEnabled = true
-        mainPhotoImage.addGestureRecognizer(tapGestureRecognizer)
-
-        
-        
-       // чомусь повертає картинку на 90 градусів. Силомиць повертаю назад
-     //   let rotationAngle: CGFloat = CGFloat.pi / 2 // 90 degrees in radians
-     //   mainPhotoIcon.transform = CGAffineTransform(rotationAngle: rotationAngle)
-        
-        
+        mainPhotoImage.addGestureRecognizer(tapGestureRecognizerImage)
+  
         locationManager.delegate = self
         weatherTable.dataSource = self
         weatherTable.delegate = self

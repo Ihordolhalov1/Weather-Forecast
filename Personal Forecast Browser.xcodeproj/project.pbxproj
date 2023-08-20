@@ -26,7 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		352AD25D2403FA5700FE672A /* Always Sunny In My Family.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Always Sunny In My Family.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		352AD25D2403FA5700FE672A /* Personal Forecast Browser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Personal Forecast Browser.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		352AD2602403FA5700FE672A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		352AD2622403FA5700FE672A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		352AD2642403FA5700FE672A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		352AD25E2403FA5700FE672A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				352AD25D2403FA5700FE672A /* Always Sunny In My Family.app */,
+				352AD25D2403FA5700FE672A /* Personal Forecast Browser.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,9 +140,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		352AD25C2403FA5700FE672A /* Always Sunny In My Family */ = {
+		352AD25C2403FA5700FE672A /* Personal Forecast Browser */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 352AD2712403FA5800FE672A /* Build configuration list for PBXNativeTarget "Always Sunny In My Family" */;
+			buildConfigurationList = 352AD2712403FA5800FE672A /* Build configuration list for PBXNativeTarget "Personal Forecast Browser" */;
 			buildPhases = (
 				352AD2592403FA5700FE672A /* Sources */,
 				352AD25A2403FA5700FE672A /* Frameworks */,
@@ -152,9 +152,9 @@
 			);
 			dependencies = (
 			);
-			name = "Always Sunny In My Family";
+			name = "Personal Forecast Browser";
 			productName = Sunny;
-			productReference = 352AD25D2403FA5700FE672A /* Always Sunny In My Family.app */;
+			productReference = 352AD25D2403FA5700FE672A /* Personal Forecast Browser.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -173,7 +173,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 352AD2582403FA5700FE672A /* Build configuration list for PBXProject "Always Sunny In My Family" */;
+			buildConfigurationList = 352AD2582403FA5700FE672A /* Build configuration list for PBXProject "Personal Forecast Browser" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -186,7 +186,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				352AD25C2403FA5700FE672A /* Always Sunny In My Family */,
+				352AD25C2403FA5700FE672A /* Personal Forecast Browser */,
 			);
 		};
 /* End PBXProject section */
@@ -406,7 +406,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		352AD2582403FA5700FE672A /* Build configuration list for PBXProject "Always Sunny In My Family" */ = {
+		352AD2582403FA5700FE672A /* Build configuration list for PBXProject "Personal Forecast Browser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				352AD26F2403FA5800FE672A /* Debug */,
@@ -415,7 +415,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		352AD2712403FA5800FE672A /* Build configuration list for PBXNativeTarget "Always Sunny In My Family" */ = {
+		352AD2712403FA5800FE672A /* Build configuration list for PBXNativeTarget "Personal Forecast Browser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				352AD2722403FA5800FE672A /* Debug */,
