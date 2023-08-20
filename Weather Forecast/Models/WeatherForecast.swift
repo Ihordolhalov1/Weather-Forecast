@@ -74,7 +74,7 @@ struct WeatherForecast {
     
     var date: [String] = [] //масив дат
     var conditionCodeForecast: [Int] = []
-    var temperatureForecast: [Double] = [0.0]
+    var temperatureForecast: [Double] = []
     var feelsLikeForecast: [Double] = []
     var description: [String] = []
     var humidity: [Double] = []
